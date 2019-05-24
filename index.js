@@ -6,11 +6,12 @@ const {
 } = require('./config.json');
 const ytdl = require('ytdl-core');
 
+//discordFrameWork Setup
 const client = new discord.Client();
 client.login(token);
 
-//basic listeners that console.log when executed
 
+//basic listeners that console.log when executed
 client.once('ready', () => {
     console.log('Ready!');
 });
@@ -49,3 +50,6 @@ if (message.content.startsWith(`${prefix}play`)) {
     //if input isn't valid send() function sends an error message
     message.channel.send('You need to enter a valid command!');
 };
+
+//this line of code saves all the songs typed in chat
+const queue = new Map();
