@@ -1,0 +1,32 @@
+{
+  "name": "music-bot",
+  "version": "1.0.0",
+  "description": "music-bot for Discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matt-the-developer/musicBot.git"
+  },
+  "keywords": [
+    "music",
+    "bot",
+    "discord.js",
+    "big",
+    "way"
+  ],
+  "author": "m. smith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matt-the-developer/musicBot/issues"
+  },
+  "homepage": "https://github.com/matt-the-developer/musicBot#readme",
+  "dependencies": {
+    "discord.js": "^11.5.0",
+    "ffmpeg-binaries": "^4.0.0",
+    "opusscript": "0.0.6",
+    "ytdl-core": "^0.29.2"
+  }
+}
