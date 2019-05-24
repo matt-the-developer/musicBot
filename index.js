@@ -31,5 +31,21 @@ if (message.author.bot) return;
 //check if the message starts with the prefix, return if it doesn't
 if (!message.content.startsWith(prefix)) return;
 
-//check which command we need to execute
-// need to add code here - 5/23/2019
+
+// guild represent an isolated collection of users and channels and is often referred to as a server // Guild means Server in Discord.js
+//check which command we need to execute and call the command
+const serverQueue = queue.get(message.guild.id);
+
+if (message.content.startsWith(`${prefix}play`)) {
+    execute(message, serverQueue);
+    return;
+}else if (message.content.startsWith(`${prefix}skip`)) {
+    skip(message, serverQueue);
+    return;
+}else if (message.content.startsWith(`${prefix}stop`)){
+    stop (message, serverQueue);
+    return;
+} else {
+    //if input isn't valid send() function sends an error message
+    message.channel.send('You need to enter a valid command!');
+};
