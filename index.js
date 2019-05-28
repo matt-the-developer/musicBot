@@ -24,41 +24,42 @@ client.once('disconnect', () => {
 
 //read messages
 client.on('message', async message => {
+    if (message.author.bot) return;
+    if (!message.content.startsWith(prefix)) return;
+
+    const serverQueue = queue.get(message.guild.id);
+
+    if (message.content.startsWith(`${prefix}play`)) {
+        execute(message, serverQueue);
+        return;
+    } else if (message.content.startsWith(`${prefix}skip`)) {
+        skip(message, serverQueue);
+        return;
+    } else if (message.content.startsWith(`${prefix}stop`)) {
+        stop(message, serverQueue);
+        return;
+    } else {
+        //if input isn't valid send() function sends an error message
+        message.channel.send('You need to enter a valid command!');
+    };
+    const songInfo = await ytdl.getInfo(args[1]);
+    const song = {
+        title: songInfo.title,
+        url: songInfo.video_url,
+    };
 
 });
 
-//check if the author of the message is our bot and return if it is
-if (message.author.bot) return;
-//check if the message starts with the prefix, return if it doesn't
-if (!message.content.startsWith(prefix)) return;
-
-
-// guild represent an isolated collection of users and channels and is often referred to as a server // Guild means Server in Discord.js
-//check which command we need to execute and call the command
-const serverQueue = queue.get(message.guild.id);
-
-if (message.content.startsWith(`${prefix}play`)) {
-    execute(message, serverQueue);
-    return;
-}else if (message.content.startsWith(`${prefix}skip`)) {
-    skip(message, serverQueue);
-    return;
-}else if (message.content.startsWith(`${prefix}stop`)){
-    stop (message, serverQueue);
-    return;
-} else {
-    //if input isn't valid send() function sends an error message
-    message.channel.send('You need to enter a valid command!');
-};
 
 //this line of code saves all the songs typed in chat
 const queue = new Map();
 
-async function execute (message, serverQueue) {
+async function execute(message, serverQueue) {
     const args = message.content.split(' ');
+
     const voiceChannel = message.member.voiceChannel;
     if (!voiceChannel) return message.channel.send('You need to be in a voice channel to play music!');
-        const permissions = voiceChannel.permissionsFor(message.client.user);
+    const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
         return message.channel.send('I need the permissions to join and speak in your voice channel!')
     }
